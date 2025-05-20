@@ -1,7 +1,5 @@
-
 <?php
-
-namespace app\models\drivers;
+namespace app\models\drivers; 
 
 use mysqli;
 
