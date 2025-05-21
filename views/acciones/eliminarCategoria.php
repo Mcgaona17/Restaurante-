@@ -1,4 +1,3 @@
-
 <?php
 include "../../models/drivers/conexDB.php";
 include "../../models/entities/entity.php";
