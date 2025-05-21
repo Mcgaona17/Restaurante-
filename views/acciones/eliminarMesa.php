@@ -1,8 +1,11 @@
 <?php
-include "../../models/drivers/conexDB.php";
-include "../../models/entities/entity.php";
-include "../../models/entities/mesa.php";
-include "../../controllers/mesasController.php";
+// Utilizando rutas absolutas para resolver el problema de inclusión
+$baseDir = $_SERVER['DOCUMENT_ROOT'] . '/Restaurante-';
+
+require_once $baseDir . '/models/drivers/conexDB.php';
+require_once $baseDir . '/models/entities/entity.php';
+require_once $baseDir . '/models/entities/mesa.php';
+require_once $baseDir . '/controllers/mesasController.php';
 
 use app\controllers\MesasController;
 
@@ -24,6 +27,6 @@ if(isset($_GET["id"])){
     $tipo = "error";
 }
 
-// Redirigir a la página de mesas con un mensaje
-header("Location: ../../mesas.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
+// Redirigir a la página de mesas con un mensaje (utilizando también ruta absoluta)
+header("Location: " . '/Restaurante-/views/mesas.php?mensaje=' . urlencode($mensaje) . "&tipo=" . $tipo);
 exit;

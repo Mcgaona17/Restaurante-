@@ -7,23 +7,50 @@ include "../../controllers/mesasController.php";
 use app\controllers\MesasController;
 
 $controller = new MesasController();
+$mensaje = "";
+$tipo = "";
 
-if(isset($_GET["id"])){
-    $result = $controller->deleteMesa($_GET["id"]);
-    
-    // Mensaje según el resultado
-    if($result){
-        $mensaje = "Mesa eliminada correctamente";
-        $tipo = "success";
+// Verificar si se enviaron los datos del formulario
+if(isset($_POST["nombreInput"])){
+    // Verificar si es una actualización o un nuevo registro
+    if(isset($_POST["idInput"])){
+        // Actualizar mesa existente
+        $request = [
+            'idInput' => $_POST["idInput"],
+            'nombreInput' => $_POST["nombreInput"]
+        ];
+        
+        $result = $controller->updateMesa($request);
+        
+        if($result){
+            $mensaje = "Mesa actualizada correctamente";
+            $tipo = "success";
+        } else {
+            $mensaje = "Error al actualizar la mesa";
+            $tipo = "error";
+        }
     } else {
-        $mensaje = "No se puede eliminar la mesa porque tiene órdenes asociadas";
-        $tipo = "error";
+        // Crear nueva mesa
+        $request = [
+            'nombreInput' => $_POST["nombreInput"]
+        ];
+        
+        $result = $controller->saveNewMesa($request);
+        
+        if($result){
+            $mensaje = "Mesa creada correctamente";
+            $tipo = "success";
+        } else {
+            $mensaje = "Error al crear la mesa";
+            $tipo = "error";
+        }
     }
 } else {
-    $mensaje = "ID de mesa no proporcionado";
+    $mensaje = "No se recibieron datos del formulario";
     $tipo = "error";
 }
 
 // Redirigir a la página de mesas con un mensaje
+// La ruta relativa correcta desde acciones/ a mesas.php
 header("Location: ../mesas.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
 exit;
