@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Restaurante</title>
     <link rel="stylesheet" href="css/estilos.css">
+    
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Sistema de Gestión de Restaurante</h1>
-        </header>
+        </header>   
         <nav>
             <ul>
                 <li><a href="platos.php">Platos</a></li>

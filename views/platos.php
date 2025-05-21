@@ -23,7 +23,7 @@ if(isset($_GET['mensaje'])) {
 ?>
 
 <div>
-    <a href="form_plato.php" class="btn">Nuevo Plato</a>
+    <a href="forms/form_plato.php" class="btn">Nuevo Plato</a>
 </div>
 
 <table>
@@ -57,5 +57,12 @@ if(isset($_GET['mensaje'])) {
         ?>
     </tbody>
 </table>
+<script>
+function confirmarEliminar(mensaje) {
+    return confirm(mensaje);
+}
+</script>
 
+</body>
+</html>
 <?php include "includes/footer.php"; ?>
