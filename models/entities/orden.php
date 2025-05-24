@@ -11,7 +11,8 @@ class Orden extends Entity{
     protected $idTable = null;
     protected $anulada = 0;
     protected $tableName = ""; // Para almacenar el nombre de la mesa
-
+    protected $detalles = [];
+    
     public function all(){
         $sql = "SELECT o.*, t.name as tableName FROM orders o ";
         $sql .= "JOIN restaurant_tables t ON o.idTable = t.id ";

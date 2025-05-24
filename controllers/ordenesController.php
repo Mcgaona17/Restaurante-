@@ -46,13 +46,15 @@ class OrdenesController{
         return $orden->anular();
     }
 
-    public function getOrdenById($id){
-        $orden = new Orden();
-        if($orden->getById($id)){
-            return $orden;
-        }
-        return null;
+   public function getOrdenById($id){
+    $orden = new Orden();
+    if ($orden->getById($id)) {
+        $detalles = $this->getDetallesByOrdenId($id); // cargamos los detalles
+        $orden->set("detalles", $detalles);           // los asignamos
+        return $orden;
     }
+    return null;
+}
 
     public function getDetallesByOrdenId($idOrden){
         $detalleOrden = new DetalleOrden();
