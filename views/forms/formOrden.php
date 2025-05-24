@@ -1,13 +1,15 @@
 <?php
-include "../models/drivers/conexDB.php";
-include "../models/entities/entity.php";
-include "../models/entities/orden.php";
-include "../models/entities/detalleOrden.php";
-include "../models/entities/plato.php";
-include "../models/entities/mesa.php";
-include "../controllers/ordenesController.php";
-include "../controllers/platosController.php";
-include "../controllers/mesasController.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/models/drivers/conexDB.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/models/entities/entity.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/models/entities/orden.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/models/entities/detalleOrden.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/models/entities/plato.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/models/entities/mesa.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/controllers/ordenesController.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/controllers/platosController.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/Mono/controllers/mesasController.php";
+
+
 
 use app\controllers\OrdenesController;
 use app\controllers\PlatosController;
@@ -26,7 +28,7 @@ $platos = $platosController->queryAllPlatos();
 $titulo = "Nueva Orden";
 ?>
 
-<?php include "includes/header.php"; ?>
+<?php include "../includes/header2.php"; ?>
 
 <h2><?php echo $titulo; ?></h2>
 
@@ -81,7 +83,7 @@ $titulo = "Nueva Orden";
     
     <div>
         <button type="submit">Guardar Orden</button>
-        <a href="ordenes.php" class="btn btn-danger">Cancelar</a>
+        <a href="../ordenes.php" class="btn btn-danger">Cancelar</a>
     </div>
 </form>
 
@@ -185,4 +187,4 @@ $titulo = "Nueva Orden";
     });
 </script>
 
-<?php include "includes/footer.php"; ?>
+<?php include "../includes/footer.php"; ?>

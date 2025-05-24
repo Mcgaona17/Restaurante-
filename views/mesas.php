@@ -25,9 +25,9 @@ $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 </head>
 <body>
     <div class="container">
-        <header>
+         <header>
             <h1>Sistema de Gestión de Restaurante</h1>
-        </header>   
+        </header>
         <nav>
             <ul>
                 <li><a href="platos.php">Platos</a></li>

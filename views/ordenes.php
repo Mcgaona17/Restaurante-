@@ -13,18 +13,29 @@ $ordenes = $controller->queryAllOrdenes();
 
 <?php include "includes/header.php"; ?>
 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Órdenes</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="container">
+
 <h2>Gestión de Órdenes</h2>
 
 <?php
 // Mostrar mensajes si existen
-if(isset($_GET['mensaje'])) {
+if (isset($_GET['mensaje'])) {
     $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'success';
-    echo '<div class="message-' . $tipo . '">' . $_GET['mensaje'] . '</div>';
+    echo '<div class="message-' . htmlspecialchars($tipo) . '">' . htmlspecialchars($_GET['mensaje']) . '</div>';
 }
 ?>
 
 <div>
-    <a href="form_orden.php" class="btn">Nueva Orden</a>
+    <a href="../views/forms/formOrden.php" class="btn">Nueva Orden</a>
 </div>
 
 <table>
@@ -39,28 +50,35 @@ if(isset($_GET['mensaje'])) {
         </tr>
     </thead>
     <tbody>
-        <?php
-        if(count($ordenes) > 0) {
-            foreach($ordenes as $orden){
-                echo "<tr>";
-                echo "<td>".$orden->get("id")."</td>";
-                echo "<td>".$orden->get("dateOrder")."</td>";
-                echo "<td>".$orden->get("tableName")."</td>";
-                echo "<td>$".$orden->get("total")."</td>";
-                echo "<td>".($orden->get("anulada") == 1 ? "Anulada" : "Activa")."</td>";
-                echo "<td>";
-                echo "<a href='ver_orden.php?id=".$orden->get("id")."' class='btn btn-info'>Ver Detalles</a> ";
-                if($orden->get("anulada") == 0) {
-                    echo "<a href='acciones/anular_orden.php?id=".$orden->get("id")."' class='btn btn-danger' onclick='return confirmarEliminar(\"¿Está seguro de anular esta orden?\")'>Anular</a>";
-                }
-                echo "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='6'>No hay órdenes registradas</td></tr>";
-        }
-        ?>
+        <?php if (count($ordenes) > 0): ?>
+            <?php foreach ($ordenes as $orden): ?>
+                <tr>
+                    <td><?= $orden->get("id") ?></td>
+                    <td><?= $orden->get("dateOrder") ?></td>
+                    <td><?= $orden->get("tableName") ?></td>
+                    <td>$<?= number_format($orden->get("total"), 0, ',', '.') ?></td>
+                    <td><?= $orden->get("anulada") == 1 ? "Anulada" : "Activa" ?></td>
+                    <td>
+                    <a href="acciones/verOrden.php?id=<?= $orden->get('id') ?>" class="btn btn-info">Ver Detalles</a>
+                        <?php if ($orden->get("anulada") == 0): ?>
+                            <a href="acciones/anular_orden.php?id=<?= $orden->get("id") ?>" class="btn btn-danger" onclick="return confirmarEliminar('¿Está seguro de anular esta orden?')">Anular</a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="6">No hay órdenes registradas</td></tr>
+        <?php endif; ?>
     </tbody>
 </table>
 
+<script>
+function confirmarEliminar(mensaje) {
+    return confirm(mensaje);
+}
+</script>
+
 <?php include "includes/footer.php"; ?>
+</div>
+</body>
+</html>

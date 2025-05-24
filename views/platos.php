@@ -12,13 +12,23 @@ $platos = $controller->queryAllPlatos();
 
 <?php include "includes/header.php"; ?>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Platos</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="container">
+   
 <h2>Gestión de Platos</h2>
 
 <?php
 // Mostrar mensajes si existen
-if(isset($_GET['mensaje'])) {
+if (isset($_GET['mensaje'])) {
     $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'success';
-    echo '<div class="message-' . $tipo . '">' . $_GET['mensaje'] . '</div>';
+    echo '<div class="message-' . $tipo . '">' . htmlspecialchars($_GET['mensaje']) . '</div>';
 }
 ?>
 
@@ -37,32 +47,32 @@ if(isset($_GET['mensaje'])) {
         </tr>
     </thead>
     <tbody>
-        <?php
-        if(count($platos) > 0) {
-            foreach($platos as $plato){
-                echo "<tr>";
-                echo "<td>".$plato->get("id")."</td>";
-                echo "<td>".$plato->get("description")."</td>";
-                echo "<td>".$plato->get("categoryName")."</td>";
-                echo "<td>$".$plato->get("price")."</td>";
-                echo "<td>";
-                echo "<a href='form_plato.php?id=".$plato->get("id")."' class='btn btn-warning'>Editar</a> ";
-                echo "<a href='acciones/eliminar_plato.php?id=".$plato->get("id")."' class='btn btn-danger' onclick='return confirmarEliminar(\"¿Está seguro de eliminar este plato?\")'>Eliminar</a>";
-                echo "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='5'>No hay platos registrados</td></tr>";
-        }
-        ?>
+        <?php if (count($platos) > 0): ?>
+            <?php foreach ($platos as $plato): ?>
+                <tr>
+                    <td><?= $plato->get("id") ?></td>
+                    <td><?= $plato->get("description") ?></td>
+                    <td><?= $plato->get("categoryName") ?></td>
+                    <td>$<?= number_format($plato->get("price"), 0, ',', '.') ?></td>
+                    <td>
+                        <a href="forms/form_plato.php?id=<?= $plato->get("id") ?>" class="btn btn-warning">Editar</a>
+                        <a href="acciones/eliminar_plato.php?id=<?= $plato->get("id") ?>" class="btn btn-danger" onclick="return confirmarEliminar('¿Está seguro de eliminar este plato?')">Eliminar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="5">No hay platos registrados</td></tr>
+        <?php endif; ?>
     </tbody>
 </table>
+
 <script>
 function confirmarEliminar(mensaje) {
     return confirm(mensaje);
 }
 </script>
 
+<?php include "includes/footer.php"; ?>
+</div>
 </body>
 </html>
-<?php include "includes/footer.php"; ?>
